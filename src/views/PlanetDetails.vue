@@ -1,21 +1,28 @@
 <template>
-  <div v-if="planet" class="planet">
+  <div v-if="planet" class="planet" :id="planetId">
     <div class="main">
       <div class="image">
-        <img :src="require(`@/assets/${planet.images.planet}`)" alt="" />
+        <img v-if="active === 1" :src="require(`@/assets/${planet.images.planet}`)" alt="" />
+        <img v-else-if="active === 2" :src="require(`@/assets/${planet.images.internal}`)" alt="" />
+        <img v-else-if="active === 3" :src="require(`@/assets/${planet.images.geology}`)" alt="" />
+
       </div>
       <div class="planetInformation">
         <h1>{{ planet.name }}</h1>
         <div class="planetContent">
-          <p>{{ planet.overview.content }}</p>
+          <p v-if="active === 1">{{ planet.overview.content }}</p>
+          <p v-else-if="active === 2">{{ planet.structure.content }}</p>
+          <p v-else-if="active === 3">{{ planet.geology.content }}</p>
         </div>
         <div class="planetSource">
-          <a :href="planet.overview.source">Wikipedia</a>
+          <a v-if="active === 1" :href="planet.overview.source">Wikipedia</a>
+          <a v-if="active === 2" :href="planet.structure.source">Wikipedia</a>
+          <a v-if="active === 3" :href="planet.geology.source">Wikipedia</a>
         </div>
         <div class="planetButtons">
-          <button>01 OVERVIEW</button>
-          <button>02 ITERNAL STRUCTURE</button>
-          <button>03 SURFACE GEOLOGY</button>
+          <button @click="handleClick(1)" :class="active === 1 ? 'active' : ''">01 OVERVIEW</button>
+          <button @click="handleClick(2)" :class="active === 2 ? 'active' : ''">02 ITERNAL STRUCTURE</button>
+          <button @click="handleClick(3)" :class="active === 3 ? 'active' : ''">03 SURFACE GEOLOGY</button>
         </div>
       </div>
     </div>
@@ -33,7 +40,7 @@
         <h2>{{ planet.radius }}</h2>
       </div>
       <div class="secondary-info">
-        <p><span>RAVERAGE TEMP.</span></p>
+        <p><span>AVERAGE TEMP.</span></p>
         <h2>{{ planet.temperature }}</h2>
       </div>
     </div>
@@ -41,7 +48,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 export default {
   props: ["id"],
   setup(props) {
@@ -64,15 +71,28 @@ export default {
       getPlanetData();
     });
 
-    return { planet, error };
+    const active  = ref(1);
+
+    const handleClick = (value) => {
+      active.value = value;
+    }
+
+    const planetId = computed(() => {
+      return planet.value ? planet.value.name.toLowerCase() : "";
+    })
+
+    return { planet, error, active, handleClick,planetId };
   },
 };
+
+
 </script>
 
 <style>
 .planet {
   width: 80%;
   margin: 0 auto;
+  padding: 2rem 0;
 }
 
 .main {
@@ -95,14 +115,14 @@ export default {
 }
 
 .planetInformation h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
   text-transform: uppercase;
 }
 
 .planetContent {
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: #fff;
 }
 
@@ -121,7 +141,7 @@ export default {
 }
 
 .secondary {
-  margin-top: 0.75rem;
+  margin-top: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -149,4 +169,62 @@ export default {
     margin: 0 auto;
   }
 }
+
+#mercury .planetButtons button.active{
+  background: #419EBB;
+  border-radius: 1px solid #419EBB;
+  
+}
+
+#venus .planetButtons button.active{
+  background: #EDA249;
+  border-radius: 1px solid #EDA249;
+  
+}
+
+#earth .planetButtons button.active{
+  background: #6D2ED5;
+  border-radius: 1px solid #6D2ED5;
+  
+}
+
+#mars .planetButtons button.active{
+  background: #D14C32;
+  border-radius: 1px solid #D14C32;
+  
+}
+
+#jupiter .planetButtons button.active{
+  background: #D83A34;
+  border-radius: 1px solid #D83A34;
+  
+}
+
+#saturn .planetButtons button.active{
+  background: #CD5120;
+  border-radius: 1px solid #CD5120;
+  
+}
+
+#uranus .planetButtons button.active{
+  background: #1EC1A2;
+  border-radius: 1px solid #1EC1A2;
+  
+}
+
+#neptune .planetButtons button.active{
+  background: #2D68F0;
+  border-radius: 1px solid #2D68F0;
+  
+}
+
+
+
+.planetButtons button{
+  cursor: pointer;
+}
+
+
+
+
 </style>

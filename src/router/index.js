@@ -7,6 +7,7 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+    redirect: '/planets/1'
   },
   {
     path: "/planets/:id",
