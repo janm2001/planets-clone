@@ -10,6 +10,7 @@
     "core-js": "^3.8.3",
     "json-server": "^0.17.3",
     "vue": "^3.2.13",
+    "vue-awesome": "^4.5.0",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

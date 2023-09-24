@@ -2,10 +2,21 @@
   <div v-if="planet" class="planet" :id="planetId">
     <div class="main">
       <div class="image">
-        <img v-if="active === 1" :src="require(`@/assets/${planet.images.planet}`)" alt="" />
-        <img v-else-if="active === 2" :src="require(`@/assets/${planet.images.internal}`)" alt="" />
-        <img v-else-if="active === 3" :src="require(`@/assets/${planet.images.geology}`)" alt="" />
-
+        <img
+          v-if="active === 1"
+          :src="require(`@/assets/${planet.images.planet}`)"
+          alt=""
+        />
+        <img
+          v-else-if="active === 2"
+          :src="require(`@/assets/${planet.images.internal}`)"
+          alt=""
+        />
+        <img
+          v-else-if="active === 3"
+          :src="require(`@/assets/${planet.images.geology}`)"
+          alt=""
+        />
       </div>
       <div class="planetInformation">
         <h1>{{ planet.name }}</h1>
@@ -20,9 +31,15 @@
           <a v-if="active === 3" :href="planet.geology.source">Wikipedia</a>
         </div>
         <div class="planetButtons">
-          <button @click="handleClick(1)" :class="active === 1 ? 'active' : ''">01 OVERVIEW</button>
-          <button @click="handleClick(2)" :class="active === 2 ? 'active' : ''">02 ITERNAL STRUCTURE</button>
-          <button @click="handleClick(3)" :class="active === 3 ? 'active' : ''">03 SURFACE GEOLOGY</button>
+          <button @click="handleClick(1)" :class="active === 1 ? 'active' : ''">
+            01 OVERVIEW
+          </button>
+          <button @click="handleClick(2)" :class="active === 2 ? 'active' : ''">
+            02 ITERNAL STRUCTURE
+          </button>
+          <button @click="handleClick(3)" :class="active === 3 ? 'active' : ''">
+            03 SURFACE GEOLOGY
+          </button>
         </div>
       </div>
     </div>
@@ -71,21 +88,19 @@ export default {
       getPlanetData();
     });
 
-    const active  = ref(1);
+    const active = ref(1);
 
     const handleClick = (value) => {
       active.value = value;
-    }
+    };
 
     const planetId = computed(() => {
       return planet.value ? planet.value.name.toLowerCase() : "";
-    })
+    });
 
-    return { planet, error, active, handleClick,planetId };
+    return { planet, error, active, handleClick, planetId };
   },
 };
-
-
 </script>
 
 <style>
@@ -122,7 +137,7 @@ export default {
 
 .planetContent {
   width: 100%;
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #fff;
 }
 
@@ -170,61 +185,90 @@ export default {
   }
 }
 
-#mercury .planetButtons button.active{
-  background: #419EBB;
-  border-radius: 1px solid #419EBB;
-  
+#mercury .planetButtons button.active {
+  background: #419ebb;
+  border-radius: 1px solid #419ebb;
 }
 
-#venus .planetButtons button.active{
-  background: #EDA249;
-  border-radius: 1px solid #EDA249;
-  
+#venus .planetButtons button.active {
+  background: #eda249;
+  border-radius: 1px solid #eda249;
 }
 
-#earth .planetButtons button.active{
-  background: #6D2ED5;
-  border-radius: 1px solid #6D2ED5;
-  
+#earth .planetButtons button.active {
+  background: #6d2ed5;
+  border-radius: 1px solid #6d2ed5;
 }
 
-#mars .planetButtons button.active{
-  background: #D14C32;
-  border-radius: 1px solid #D14C32;
-  
+#mars .planetButtons button.active {
+  background: #d14c32;
+  border-radius: 1px solid #d14c32;
 }
 
-#jupiter .planetButtons button.active{
-  background: #D83A34;
-  border-radius: 1px solid #D83A34;
-  
+#jupiter .planetButtons button.active {
+  background: #d83a34;
+  border-radius: 1px solid #d83a34;
 }
 
-#saturn .planetButtons button.active{
-  background: #CD5120;
-  border-radius: 1px solid #CD5120;
-  
+#saturn .planetButtons button.active {
+  background: #cd5120;
+  border-radius: 1px solid #cd5120;
 }
 
-#uranus .planetButtons button.active{
-  background: #1EC1A2;
-  border-radius: 1px solid #1EC1A2;
-  
+#uranus .planetButtons button.active {
+  background: #1ec1a2;
+  border-radius: 1px solid #1ec1a2;
 }
 
-#neptune .planetButtons button.active{
-  background: #2D68F0;
-  border-radius: 1px solid #2D68F0;
-  
+#neptune .planetButtons button.active {
+  background: #2d68f0;
+  border-radius: 1px solid #2d68f0;
 }
 
-
-
-.planetButtons button{
+.planetButtons button {
   cursor: pointer;
 }
 
+@media (max-width: 968px) {
+  .planet {
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
 
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
 
+  .secondary-info {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #aaa;
+  }
 
+  .planetInformation h1 {
+    text-align: center;
+  }
+
+  .secondary {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    width: 100%;
+    height: 15vh;
+  }
+}
 </style>
